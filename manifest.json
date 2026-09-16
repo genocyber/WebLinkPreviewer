@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Link Preview Hover",
+  "version": "1.0",
+  "description": "Preview a website when hovering over a link.",
+  "icons": {
+    "48": "icon.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_script.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "mi-link-preview@jose-custom",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
