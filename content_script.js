@@ -1,14 +1,23 @@
 let currentPreview = null;
 let hoverTimer = null;
+let closeTimer = null;
 
 document.addEventListener('mouseover', (event) => {
     let target = event.target.closest('a');
 
-    // Comprobar si es un enlace válido
+    // Si el puntero entra en la propia ventana de previsualización, cancelar el cierre
+    if (event.target.closest('#link-preview-box')) {
+        clearTimeout(closeTimer);
+        return;
+    }
+
+    // Comprobar si es un enlace válido y no está dentro de la propia previsualización
     if (target && target.href && !target.href.startsWith('javascript:') && !target.href.startsWith('#')) {
+        if (target.closest('#link-preview-box')) return;
         if (currentPreview && currentPreview.dataset.targetUrl === target.href) return;
 
         clearTimeout(hoverTimer);
+        clearTimeout(closeTimer);
 
         hoverTimer = setTimeout(() => {
             removeExistingPreview();
@@ -25,7 +34,6 @@ document.addEventListener('mouseover', (event) => {
             previewBox.style.top = `${Math.max(10, topPos)}px`;
             previewBox.style.pointerEvents = 'auto';
 
-            // Creación segura del iframe sin usar innerHTML
             let iframe = document.createElement('iframe');
             iframe.src = target.href;
             iframe.width = "400";
@@ -39,8 +47,13 @@ document.addEventListener('mouseover', (event) => {
             document.body.appendChild(previewBox);
             currentPreview = previewBox;
 
+            // Mantener abierto mientras el usuario esté interactuando con la ventana
+            previewBox.addEventListener('mouseenter', () => {
+                clearTimeout(closeTimer);
+            });
+
             previewBox.addEventListener('mouseleave', () => {
-                removeExistingPreview();
+                scheduleClose();
             });
 
         }, 200);
@@ -49,13 +62,9 @@ document.addEventListener('mouseover', (event) => {
 
 document.addEventListener('mouseout', (event) => {
     let target = event.target.closest('a');
-    if (target) {
+    if (target && !target.closest('#link-preview-box')) {
         clearTimeout(hoverTimer);
-        setTimeout(() => {
-            if (currentPreview && !currentPreview.matches(':hover')) {
-                removeExistingPreview();
-            }
-        }, 100);
+        scheduleClose();
     }
 });
 
@@ -64,6 +73,15 @@ document.addEventListener('keydown', (event) => {
         removeExistingPreview();
     }
 });
+
+function scheduleClose() {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+        if (currentPreview && !currentPreview.matches(':hover')) {
+            removeExistingPreview();
+        }
+    }, 300); // 300ms de margen para permitir deslizar el cursor hacia el iframe
+}
 
 function removeExistingPreview() {
     if (currentPreview) {
