@@ -1,14 +1,11 @@
 {
-  "manifest_version": 2,
-  "name": "Link Preview Hover",
+  "manifest_version": 3,
+  "name": "Web Link Previewer",
   "version": "1.0",
-  "description": "Preview a website when hovering over a link.",
+  "description": "Muestra una ventana flotante interactiva con la vista previa de cualquier enlace al pasar el ratón por encima.",
   "icons": {
     "48": "icon.png"
   },
-  "permissions": [
-    "activeTab"
-  ],
   "content_scripts": [
     {
       "matches": [
@@ -24,7 +21,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "mi-link-preview@jose-custom",
+      "id": "web-link-previewer@custom-addon",
       "data_collection_permissions": {
         "required": ["none"]
       }
