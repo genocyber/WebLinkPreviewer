@@ -1,73 +1,69 @@
-_     _nk_P_v_w_H_v_r__________________________________
- | |   (_)_ __ | | __ |  _ \_ __ _____   _(_) _____      __
- | |   | | '_ \| |/ / | |_) | '__/ _ \ \ / / |/ _ \ \/\ / /
- | |___| | | | |   <  |  __/| | |  __/\ V /| |  __/\ V  V / 
- |_____|_|_| |_|_|\_\ |_|   |_|  \___| \_/ |_|\___| \_/\_/  
+# 🔗 Web Link Previewer
 
-================================================================
+> Una extensión ligera para **Mozilla Firefox** que permite previsualizar cualquier enlace, imagen o vídeo en un panel flotante interactivo antes de entrar en él.
 
+---
 
-  [+] DESCRIPCIÓN
-  --------------------------------------------------------------
-  Web Link Previewer es una extensión para Mozilla Firefox
-  que permite previsualizar cualquier sitio web, imagen o vídeo
-  en un panel flotante interactivo antes de entrar en el enlace,
-  ahorrando tiempo y evitando la apertura de pestañas innecesarias.
+## 🚀 Características principales
 
+* **Ventana flotante interactiva:** Navega o lee el contenido de la web de destino directamente desde el panel emergente sin salir de la pestaña actual.
+* **Mover y redimensionar:** Arrastra el panel desde la barra superior para colocarlo donde quieras o cambia sus dimensiones arrastrando las esquinas.
+* **Fijar vista previa (Pin):** Congela el panel para mantenerlo abierto e interactuar con él.
+* **Formatos multimedia automáticos:** Detecta enlaces directos a imágenes (`.png`, `.jpg`, `.webp`) y vídeos (`.mp4`, `.webm`) para reproducirlos al instante.
+* **Integración con YouTube:** Convierte automáticamente los enlaces de YouTube a reproductores limpios (*embed*).
+* **Indicador de carga animado:** Muestra una barra de progreso sutil bajo el puntero del ratón mientras se procesa el enlace.
+* **Filtro de dominios:** Permite definir una lista negra de sitios donde no deseas que se active la previsualización.
+* **Modo Oscuro por defecto:** Interfaz de ajustes estilizada y adaptable.
 
-  [+] CARACTERÍSTICAS
-  --------------------------------------------------------------
-  • Ventana flotante interactiva: Navega o lee el contenido
-    de la web de destino directamente desde el panel emergente.
-  • Mover y Redimensionar: Arrastra el panel desde la barra
-    superior o cambia su tamaño arrastrando las esquinas.
-  • Fijar vista previa (Pin): Pulsa la chincheta o la barra de
-    Espacio para congelar el panel y seguir interactuando con él.
-  • Formatos multimedia automáticos: Detecta enlaces directos a
-    imágenes, vídeos y los reproduce al instante.
-  • Integración inteligente con YouTube: Convierte enlaces de
-    vídeo de YouTube a reproductores limpios (*embed*).
-  • Indicador de carga animado: Muestra una barra de progreso
-    sutil bajo el puntero mientras se procesa el enlace.
-  • Atajos de teclado intuitivos:
-      - Espacio : Fijar / Mantener abierta la ventana.
-      - Escape  : Cerrar la vista previa al instante.
-  • Acceso rápido: Abre el enlace en una nueva pestaña
-    haciendo clic en el botón de acceso directo de la cabecera.
+---
 
+## ⌨️ Controles y Atajos
 
-  [+] MODO DE USO
-  --------------------------------------------------------------
-  1. Mantén pulsada la tecla de activación (por defecto: Shift).
-  2. Coloca el puntero del ratón sobre cualquier enlace.
-  3. Tras el tiempo de espera (200 ms), aparecerá el panel.
-  4. Para cerrar la vista previa, suelta la tecla activadora.
-  5. Si deseas mantener el panel abierto sin pulsar la tecla,
-     haz clic en la cabecera, arrástralo o pulsa [Espacio].
+| Acción | Control / Atajo |
+| :--- | :--- |
+| **Activar previsualización** | Mantener pulsada la tecla configurada (por defecto `Shift`) + `Hover` |
+| **Fijar / Descongelar panel** | Tecla `Espacio` o clic en el icono 📌 de la cabecera |
+| **Cerrar ventana** | Tecla `Esc` o clic en ✖️ |
+| **Abrir en nueva pestaña** | Clic en el botón ↗️ de la cabecera |
 
+---
 
-  [!] Nota de seguridad:
-      Algunos sitios con políticas X-Frame-Options estrictas
-      (Google, Twitter/X, banca online) bloquean su carga dentro
-      de cuadros emergentes por seguridad del propio sitio web.
+## 📖 Modo de uso
 
+1. Mantén pulsada la **tecla de activación** (por defecto `Shift`).
+2. Coloca el puntero del ratón sobre cualquier enlace.
+3. Tras el tiempo de espera configurado (`200 ms`), aparecerá el panel emergente.
+4. Para cerrar la vista previa, simplemente **suelta la tecla activadora**.
+5. Si deseas mantener el panel abierto sin presionar la tecla, arrastra la cabecera o pulsa `Espacio`.
 
-  [+] CONFIGURACIÓN Y AJUSTES
-  --------------------------------------------------------------
-  Accede a las opciones haciendo clic derecho en el icono de la
-  extensión > Opciones:
+> [!NOTE]
+> **Aviso de seguridad (*X-Frame-Options*):**  
+> Algunos sitios web (como Google, X/Twitter o entidades bancarias) bloquean su carga dentro de cuadros emergentes mediante cabeceras de seguridad del propio servidor. Si el sitio lo bloquea, el panel mostrará un aviso informando que debe abrirse en una pestaña nueva.
 
-  ┌──────────────────────┬─────────────────────────────────────┐
-  │ Opción               │ Valor por defecto / Descripción     │
-  ├──────────────────────┼─────────────────────────────────────┤
-  │ Tecla de activación  │ Shift (Opciones: Control, Alt, None)│
-  │ Ancho de la ventana  │ 600 px (Ajustable de 200 a 2000 px) │
-  │ Alto de la ventana   │ 700 px (Ajustable de 200 a 2000 px) │
-  │ Delay / Espera       │ 200 ms                              │
-  │ Apariencia           │ Claro / Oscuro (Conmutador manual)  │
-  └──────────────────────┴─────────────────────────────────────┘
+---
 
+## ⚙️ Configuración y Ajustes
 
-================================================================
-  Licencia: MIT | Proyecto de código abierto
-================================================================
+Puedes personalizar el comportamiento de la extensión haciendo clic derecho sobre su icono en Firefox y seleccionando **Opciones**:
+
+* **Tecla de activación:** `Shift`, `Control`, `Alt` o `Sin tecla (Solo Hover)`.
+* **Dimensiones por defecto:** Ancho (`600px`) y Alto (`700px`).
+* **Tiempo de espera (Delay):** Retardo en milisegundos (`200ms`) antes de lanzar la vista previa.
+* **Lista negra de dominios:** Excluye sitios web específicos escribiendo un dominio por línea.
+* **Tema visual:** Alterna entre Modo Oscuro y Modo Claro.
+
+---
+
+## 🛠️ Instalación local (Desarrollo)
+
+1. Clona o descarga este repositorio en tu equipo.
+2. Abre Firefox y navega a `about:debugging#/setup`.
+3. Haz clic en **Este Firefox** (*This Firefox*).
+4. Pulsa en **Cargar complemento temporal...** (*Load Temporary Add-on...*).
+5. Selecciona el archivo `manifest.json` del proyecto.
+
+---
+
+## 📄 Licencia
+
+Este proyecto está distribuido bajo la licencia **MIT**. Consulta el archivo `LICENSE` para más detalles.
