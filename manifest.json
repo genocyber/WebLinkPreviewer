@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Web Link Previewer",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Muestra una ventana flotante con la vista previa de cualquier enlace.",
   "permissions": [
     "activeTab",
     "tabs",
-    "storage"
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "icons": {
     "48": "icon.png"

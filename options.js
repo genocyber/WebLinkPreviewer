@@ -1,14 +1,17 @@
+// Wrapper universal para soporte Firefox (browser) y Chrome/Edge (chrome)
+const extensionAPI = typeof browser !== "undefined" ? browser : chrome;
+
 const DEFAULTS = {
   activationKey: "Shift",
   previewWidth: 600,
   previewHeight: 700,
   previewDelay: 200,
   blacklistedDomains: [],
-  darkMode: true // Modo oscuro activo por defecto
+  darkMode: true
 };
 
 function restoreOptions() {
-  browser.storage.local.get(DEFAULTS).then((settings) => {
+  const processSettings = (settings) => {
     document.getElementById("activationKey").value = settings.activationKey;
     document.getElementById("previewWidth").value = settings.previewWidth;
     document.getElementById("previewHeight").value = settings.previewHeight;
@@ -20,9 +23,14 @@ function restoreOptions() {
     document.getElementById("blacklistedDomains").value = domains;
 
     const isDark = settings.darkMode !== undefined ? settings.darkMode : true;
-
     applyTheme(isDark);
-  });
+  };
+
+  if (typeof browser !== "undefined") {
+    extensionAPI.storage.local.get(DEFAULTS).then(processSettings);
+  } else {
+    extensionAPI.storage.local.get(DEFAULTS, processSettings);
+  }
 }
 
 function toggleTheme() {
@@ -30,7 +38,7 @@ function toggleTheme() {
   const isDark = currentTheme !== "dark";
   
   applyTheme(isDark);
-  browser.storage.local.set({ darkMode: isDark });
+  extensionAPI.storage.local.set({ darkMode: isDark });
 }
 
 function applyTheme(isDark) {
@@ -64,13 +72,19 @@ function saveOptions(e) {
     darkMode: currentTheme === "dark"
   };
 
-  browser.storage.local.set(settings).then(() => {
+  const onSaved = () => {
     const status = document.getElementById("status");
     status.textContent = "¡Ajustes guardados correctamente!";
     setTimeout(() => {
       status.textContent = "";
     }, 2000);
-  });
+  };
+
+  if (typeof browser !== "undefined") {
+    extensionAPI.storage.local.set(settings).then(onSaved);
+  } else {
+    extensionAPI.storage.local.set(settings, onSaved);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);

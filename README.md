@@ -6,6 +6,7 @@
 
 ## 🚀 Características principales
 
+* **Bypass de bloqueo en marcos:** Desarma cabeceras del tipo `X-Frame-Options` y `Content-Security-Policy` para permitir la previsualización de prácticamente cualquier sitio web.
 * **Ventana flotante interactiva:** Navega o lee el contenido de la web de destino directamente desde el panel emergente sin salir de la pestaña actual.
 * **Mover y redimensionar:** Arrastra el panel desde la barra superior para colocarlo donde quieras o cambia sus dimensiones arrastrando las esquinas.
 * **Fijar vista previa (Pin):** Congela el panel para mantenerlo abierto e interactuar con él.
@@ -35,10 +36,6 @@
 3. Tras el tiempo de espera configurado (`200 ms`), aparecerá el panel emergente.
 4. Para cerrar la vista previa, simplemente **suelta la tecla activadora**.
 5. Si deseas mantener el panel abierto sin presionar la tecla, arrastra la cabecera o pulsa `Espacio`.
-
-> [!NOTE]
-> **Aviso de seguridad (*X-Frame-Options*):**  
-> Algunos sitios web (como Google, X/Twitter o entidades bancarias) bloquean su carga dentro de cuadros emergentes mediante cabeceras de seguridad del propio servidor. Si el sitio lo bloquea, el panel mostrará un aviso informando que debe abrirse en una pestaña nueva.
 
 ---
 
