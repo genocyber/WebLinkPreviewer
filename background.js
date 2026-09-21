@@ -1,11 +1,18 @@
 const extensionAPI = typeof browser !== "undefined" ? browser : chrome;
 
+// Escuchador de mensajes corregido
 extensionAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "open_tab" && message.url) {
-    extensionAPI.tabs.create({ url: message.url, active: true });
-    sendResponse({ status: "ok" });
+    extensionAPI.tabs.create({ url: message.url, active: true })
+      .then(() => sendResponse({ status: "ok" }))
+      .catch((err) => sendResponse({ status: "error", error: err.message }));
+    
+    // OBLIGATORIO: Mantener el canal de mensaje abierto para la respuesta asíncrona
+    return true; 
   }
-  return true;
+  
+  // Si no procesamos ningún mensaje, devolvemos false o nada
+  return false;
 });
 
 const RULE_ID = 1;

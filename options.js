@@ -1,92 +1,65 @@
-// Wrapper universal para soporte Firefox (browser) y Chrome/Edge (chrome)
-const extensionAPI = typeof browser !== "undefined" ? browser : chrome;
+document.addEventListener("DOMContentLoaded", () => {
+  const extensionAPI = typeof browser !== "undefined" ? browser : chrome;
 
-const DEFAULTS = {
-  activationKey: "Shift",
-  previewWidth: 600,
-  previewHeight: 700,
-  previewDelay: 200,
-  blacklistedDomains: [],
-  darkMode: true
-};
+  // Cargar la versión actual desde el manifest.json
+  const manifestData = extensionAPI.runtime.getManifest();
+  const versionElement = document.getElementById("app-version");
+  if (versionElement && manifestData.version) {
+    versionElement.textContent = `v${manifestData.version}`;
+  }
 
-function restoreOptions() {
-  const processSettings = (settings) => {
-    document.getElementById("activationKey").value = settings.activationKey;
-    document.getElementById("previewWidth").value = settings.previewWidth;
-    document.getElementById("previewHeight").value = settings.previewHeight;
-    document.getElementById("previewDelay").value = settings.previewDelay;
-
-    const domains = Array.isArray(settings.blacklistedDomains) 
-      ? settings.blacklistedDomains.join("\n") 
-      : "";
-    document.getElementById("blacklistedDomains").value = domains;
-
-    const isDark = settings.darkMode !== undefined ? settings.darkMode : true;
-    applyTheme(isDark);
+  const DEFAULTS = {
+    activationKey: "Shift",
+    previewWidth: 600,
+    previewHeight: 700,
+    previewDelay: 200,
+    blacklistedDomains: []
   };
 
-  if (typeof browser !== "undefined") {
-    extensionAPI.storage.local.get(DEFAULTS).then(processSettings);
-  } else {
-    extensionAPI.storage.local.get(DEFAULTS, processSettings);
+  const form = document.getElementById("settings-form");
+  const statusMessage = document.getElementById("status-message");
+
+  function loadSettings() {
+    extensionAPI.storage.local.get(DEFAULTS, (settings) => {
+      document.getElementById("activationKey").value = settings.activationKey || DEFAULTS.activationKey;
+      document.getElementById("previewWidth").value = settings.previewWidth || DEFAULTS.previewWidth;
+      document.getElementById("previewHeight").value = settings.previewHeight || DEFAULTS.previewHeight;
+      document.getElementById("previewDelay").value = settings.previewDelay || DEFAULTS.previewDelay;
+
+      const domains = settings.blacklistedDomains || DEFAULTS.blacklistedDomains;
+      document.getElementById("blacklistedDomains").value = Array.isArray(domains) ? domains.join("\n") : "";
+    });
   }
-}
 
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  const isDark = currentTheme !== "dark";
-  
-  applyTheme(isDark);
-  extensionAPI.storage.local.set({ darkMode: isDark });
-}
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-function applyTheme(isDark) {
-  const toggleBtn = document.getElementById("themeToggle");
-  if (isDark) {
-    document.documentElement.setAttribute("data-theme", "dark");
-    toggleBtn.textContent = "☀️ Modo Claro";
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-    toggleBtn.textContent = "🌙 Modo Oscuro";
-  }
-}
+    const rawDomains = document.getElementById("blacklistedDomains").value;
+    const domainList = rawDomains
+      .split("\n")
+      .map((d) => d.trim().toLowerCase())
+      .filter((d) => d.length > 0);
 
-function saveOptions(e) {
-  e.preventDefault();
+    const newSettings = {
+      activationKey: document.getElementById("activationKey").value,
+      previewWidth: parseInt(document.getElementById("previewWidth").value, 10) || DEFAULTS.previewWidth,
+      previewHeight: parseInt(document.getElementById("previewHeight").value, 10) || DEFAULTS.previewHeight,
+      previewDelay: parseInt(document.getElementById("previewDelay").value, 10) || DEFAULTS.previewDelay,
+      blacklistedDomains: domainList
+    };
 
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  const rawDomains = document.getElementById("blacklistedDomains").value;
-  
-  const domainsArray = rawDomains
-    .split("\n")
-    .map(d => d.trim().toLowerCase())
-    .filter(d => d.length > 0);
+    extensionAPI.storage.local.set(newSettings, () => {
+      showStatus("Ajustes guardados correctamente");
+    });
+  });
 
-  const settings = {
-    activationKey: document.getElementById("activationKey").value,
-    previewWidth: parseInt(document.getElementById("previewWidth").value, 10) || DEFAULTS.previewWidth,
-    previewHeight: parseInt(document.getElementById("previewHeight").value, 10) || DEFAULTS.previewHeight,
-    previewDelay: parseInt(document.getElementById("previewDelay").value, 10) || DEFAULTS.previewDelay,
-    blacklistedDomains: domainsArray,
-    darkMode: currentTheme === "dark"
-  };
-
-  const onSaved = () => {
-    const status = document.getElementById("status");
-    status.textContent = "¡Ajustes guardados correctamente!";
+  function showStatus(msg) {
+    statusMessage.textContent = msg;
+    statusMessage.classList.add("visible");
     setTimeout(() => {
-      status.textContent = "";
-    }, 2000);
-  };
-
-  if (typeof browser !== "undefined") {
-    extensionAPI.storage.local.set(settings).then(onSaved);
-  } else {
-    extensionAPI.storage.local.set(settings, onSaved);
+      statusMessage.classList.remove("visible");
+    }, 2500);
   }
-}
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
-document.getElementById("saveBtn").addEventListener("click", saveOptions);
-document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+  loadSettings();
+});

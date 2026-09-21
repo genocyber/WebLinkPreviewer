@@ -4,8 +4,6 @@
   "version": "1.2",
   "description": "Muestra una ventana flotante con la vista previa de cualquier enlace.",
   "permissions": [
-    "activeTab",
-    "tabs",
     "storage",
     "declarativeNetRequest"
   ],
@@ -22,7 +20,8 @@
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "service_worker": "background.js"
   },
   "options_ui": {
     "page": "options.html",
@@ -38,7 +37,8 @@
       ],
       "css": [
         "style.css"
-      ]
+      ],
+      "run_at": "document_idle"
     }
   ],
   "browser_specific_settings": {

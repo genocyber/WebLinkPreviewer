@@ -1,20 +1,22 @@
 # 🔗 Web Link Previewer
 
-> Una extensión ligera para **Mozilla Firefox** que permite previsualizar cualquier enlace, imagen o vídeo en un panel flotante interactivo antes de entrar en él.
+> Una extensión ligera y de alto rendimiento para **Mozilla Firefox, Google Chrome, Brave y Microsoft Edge** que permite previsualizar cualquier enlace, imagen o vídeo en un panel flotante interactivo sin abandonar la pestaña actual.
 
 ---
 
 ## 🚀 Características principales
 
-* **Bypass de bloqueo en marcos:** Desarma cabeceras del tipo `X-Frame-Options` y `Content-Security-Policy` para permitir la previsualización de prácticamente cualquier sitio web.
-* **Ventana flotante interactiva:** Navega o lee el contenido de la web de destino directamente desde el panel emergente sin salir de la pestaña actual.
-* **Mover y redimensionar:** Arrastra el panel desde la barra superior para colocarlo donde quieras o cambia sus dimensiones arrastrando las esquinas.
-* **Fijar vista previa (Pin):** Congela el panel para mantenerlo abierto e interactuar con él.
-* **Formatos multimedia automáticos:** Detecta enlaces directos a imágenes (`.png`, `.jpg`, `.webp`) y vídeos (`.mp4`, `.webm`) para reproducirlos al instante.
-* **Integración con YouTube:** Convierte automáticamente los enlaces de YouTube a reproductores limpios (*embed*).
-* **Indicador de carga animado:** Muestra una barra de progreso sutil bajo el puntero del ratón mientras se procesa el enlace.
-* **Filtro de dominios:** Permite definir una lista negra de sitios donde no deseas que se active la previsualización.
-* **Modo Oscuro por defecto:** Interfaz de ajustes estilizada y adaptable.
+* **Bypass de bloqueo en marcos (X-Frame / CSP):** Elimina dinámicamente las cabeceras `X-Frame-Options` y `Content-Security-Policy` mediante `declarativeNetRequest` para previsualizar sitios web que bloquean incrustaciones.
+* **Optimización extrema de rendimiento:** Lógica refactorizada basada en eventos `mouseover` y `mouseout` con eliminación total de trazado de cursor global (`mousemove`), garantizando un consumo mínimo de CPU.
+* **Arquitectura Híbrida V3:** Soporte nativo para Manifest V3 compatible tanto con Firefox (Event Pages) como con Chromium (Service Workers).
+* **Ventana flotante interactiva:** Navega o lee el contenido de destino directamente desde el panel emergente.
+* **Mover y redimensionar:** Arrastra el panel desde la cabecera o ajusta sus dimensiones desde las esquinas.
+* **Fijar vista previa (Pin):** Congela el panel para mantenerlo abierto e interactuar libremente con él.
+* **Formatos multimedia automáticos:** Renderizado directo de imágenes (`.png`, `.jpg`, `.webp`, `.svg`) y vídeos (`.mp4`, `.webm`, `.ogg`).
+* **Integración con YouTube:** Conversión automática de URLs de YouTube a modo incrustado (*embed*).
+* **Indicador de carga animado:** Barra de progreso sutil bajo el puntero mientras se procesa la previsualización.
+* **Lista negra de dominios:** Desactivación configurable por dominios específicos.
+* **Modo Oscuro por defecto:** Interfaz adaptable con soporte para temas claro/oscuro.
 
 ---
 
@@ -34,14 +36,14 @@
 1. Mantén pulsada la **tecla de activación** (por defecto `Shift`).
 2. Coloca el puntero del ratón sobre cualquier enlace.
 3. Tras el tiempo de espera configurado (`200 ms`), aparecerá el panel emergente.
-4. Para cerrar la vista previa, simplemente **suelta la tecla activadora**.
+4. Para cerrar la vista previa, suelta la tecla activadora.
 5. Si deseas mantener el panel abierto sin presionar la tecla, arrastra la cabecera o pulsa `Espacio`.
 
 ---
 
 ## ⚙️ Configuración y Ajustes
 
-Puedes personalizar el comportamiento de la extensión haciendo clic derecho sobre su icono en Firefox y seleccionando **Opciones**:
+Haz clic derecho sobre el icono de la extensión y selecciona **Opciones**:
 
 * **Tecla de activación:** `Shift`, `Control`, `Alt` o `Sin tecla (Solo Hover)`.
 * **Dimensiones por defecto:** Ancho (`600px`) y Alto (`700px`).
@@ -53,11 +55,21 @@ Puedes personalizar el comportamiento de la extensión haciendo clic derecho sob
 
 ## 🛠️ Instalación local (Desarrollo)
 
-1. Clona o descarga este repositorio en tu equipo.
-2. Abre Firefox y navega a `about:debugging#/setup`.
-3. Haz clic en **Este Firefox** (*This Firefox*).
-4. Pulsa en **Cargar complemento temporal...** (*Load Temporary Add-on...*).
-5. Selecciona el archivo `manifest.json` del proyecto.
+### En Mozilla Firefox:
+1. Navega a `about:debugging#/setup`.
+2. Haz clic en **Este Firefox** (*This Firefox*).
+3. Pulsa en **Cargar complemento temporal...** (*Load Temporary Add-on...*).
+4. Selecciona el archivo `manifest.json` del proyecto.
+
+### En Chromium (Chrome, Brave, Edge):
+1. Navega a `chrome://extensions`.
+2. Activa el **Modo de desarrollador** (esquina superior derecha).
+3. Haz clic en **Cargar descomprimida** (*Load unpacked*).
+4. Selecciona la carpeta raíz del proyecto.
+
+> [!TIP]
+> **Permiso de ejecución automática en Chromium:**  
+> Al instalarla localmente en Chrome/Brave/Edge, el navegador puede restringir la extensión a ejecución "Bajo demanda". Para que funcione siempre de forma automática al pasar el ratón, haz clic secundario en el icono de la extensión -> **"Puede leer y cambiar datos del sitio"** -> Selecciona **"En todos los sitios"**.
 
 ---
 

@@ -1,172 +1,60 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Preferencias de Vista Previa</title>
-  <style>
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #0f172a;
-      --input-bg: #f8fafc;
-      --input-border: #cbd5e1;
-      --button-bg: #2563eb;
-      --button-hover: #1d4ed8;
-      --toggle-bg: #e2e8f0;
-    }
-
-    [data-theme="dark"] {
-      --bg-color: #0f172a;
-      --text-color: #f8fafc;
-      --input-bg: #1e293b;
-      --input-border: #334155;
-      --button-bg: #3b82f6;
-      --button-hover: #2563eb;
-      --toggle-bg: #334155;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: 0 auto;
-      color: var(--text-color);
-      background-color: var(--bg-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      font-size: 22px;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .theme-toggle-btn {
-      background-color: var(--toggle-bg);
-      color: var(--text-color);
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      font-size: 15px;
-      margin-bottom: 8px;
-    }
-
-    .help-text {
-      font-size: 12px;
-      opacity: 0.75;
-      margin-top: 4px;
-      margin-bottom: 6px;
-    }
-
-    select, input[type="number"], textarea {
-      width: 100%;
-      padding: 10px 12px;
-      font-size: 15px;
-      border: 1px solid var(--input-border);
-      border-radius: 6px;
-      background-color: var(--input-bg);
-      color: var(--text-color);
-      box-sizing: border-box;
-      outline: none;
-      transition: border-color 0.2s ease, background-color 0.2s ease;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-      font-family: monospace;
-    }
-
-    select:focus, input[type="number"]:focus, textarea:focus {
-      border-color: var(--button-bg);
-    }
-
-    #saveBtn {
-      width: 100%;
-      background-color: var(--button-bg);
-      color: white;
-      border: none;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.2s ease;
-    }
-
-    #saveBtn:hover {
-      background-color: var(--button-hover);
-    }
-
-    #status {
-      margin-top: 12px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      color: #16a34a;
-      min-height: 20px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajustes de Link Previewer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="settings-container">
+    <div class="header">
+      <h1>Ajustes de Link Previewer</h1>
+      <span id="app-version" class="version-badge">v0.0.0</span>
+    </div>
 
-  <div class="header-container">
-    <h2>Preferencias de Vista Previa</h2>
-    <button id="themeToggle" class="theme-toggle-btn">☀️ Modo Claro</button>
+    <form id="settings-form">
+      <div class="form-group">
+        <label for="activationKey">Tecla activadora</label>
+        <select id="activationKey" name="activationKey">
+          <option value="Shift">Shift</option>
+          <option value="Control">Control (Ctrl)</option>
+          <option value="Alt">Alt</option>
+          <option value="none">Ninguna (Hover directo)</option>
+        </select>
+        <small>Mantén pulsada esta tecla al pasar el ratón sobre un enlace para abrir la vista previa.</small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="previewWidth">Ancho por defecto (px)</label>
+          <input type="number" id="previewWidth" name="previewWidth" min="200" max="1920" step="10">
+        </div>
+
+        <div class="form-group">
+          <label for="previewHeight">Alto por defecto (px)</label>
+          <input type="number" id="previewHeight" name="previewHeight" min="150" max="1080" step="10">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="previewDelay">Retardo de activación (ms)</label>
+        <input type="number" id="previewDelay" name="previewDelay" min="0" max="2000" step="50">
+        <small>Tiempo que debe permanecer el cursor sobre el enlace antes de mostrar la previsualización.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="blacklistedDomains">Lista negra de dominios</label>
+        <textarea id="blacklistedDomains" name="blacklistedDomains" rows="4" placeholder="ejemplo.com&#10;otrodominio.es"></textarea>
+        <small>Escribe un dominio por línea. La vista previa estará deshabilitada en estos sitios.</small>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="save-btn" class="btn-primary">Guardar cambios</button>
+        <span id="status-message" class="status-message"></span>
+      </div>
+    </form>
   </div>
-
-  <div class="form-group">
-    <label for="activationKey">Tecla de activación:</label>
-    <select id="activationKey">
-      <option value="Shift">Tecla Shift</option>
-      <option value="Control">Tecla Control</option>
-      <option value="Alt">Tecla Alt</option>
-      <option value="none">Sin tecla (Solo Hover)</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="previewWidth">Ancho de la ventana (px):</label>
-    <input type="number" id="previewWidth" min="200" max="2000" step="10">
-  </div>
-
-  <div class="form-group">
-    <label for="previewHeight">Alto de la ventana (px):</label>
-    <input type="number" id="previewHeight" min="200" max="2000" step="10">
-  </div>
-
-  <div class="form-group">
-    <label for="previewDelay">Tiempo de espera / Delay (ms):</label>
-    <input type="number" id="previewDelay" min="0" max="3000" step="50">
-  </div>
-
-  <div class="form-group">
-    <label for="blacklistedDomains">Lista negra de dominios:</label>
-    <div class="help-text">Introduce un dominio por línea (ej: twitter.com, google.com).</div>
-    <textarea id="blacklistedDomains" placeholder="ejemplo.com&#10;dominio-ignorado.es"></textarea>
-  </div>
-
-  <button id="saveBtn">Guardar Ajustes</button>
-  <div id="status"></div>
 
   <script src="options.js"></script>
 </body>
