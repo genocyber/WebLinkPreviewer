@@ -11,20 +11,19 @@
     "<all_urls>"
   ],
   "icons": {
-    "48": "icon.png"
+    "48": "assets/icons/icon.png"
   },
   "action": {
-    "default_icon": "icon.png",
+    "default_icon": "assets/icons/icon.png",
     "default_title": "Ajustes de Preview"
   },
   "background": {
     "scripts": [
-      "background.js"
-    ],
-    "service_worker": "background.js"
+      "src/background/background.js"
+    ]
   },
   "options_ui": {
-    "page": "options.html",
+    "page": "ui/options/options.html",
     "open_in_tab": true
   },
   "content_scripts": [
@@ -33,10 +32,10 @@
         "<all_urls>"
       ],
       "js": [
-        "content_script.js"
+        "src/content/content_script.js"
       ],
       "css": [
-        "style.css"
+        "assets/styles/global.css"
       ],
       "run_at": "document_idle"
     }

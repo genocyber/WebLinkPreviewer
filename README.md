@@ -8,7 +8,7 @@
 
 * **Bypass de bloqueo en marcos (X-Frame / CSP):** Elimina dinámicamente las cabeceras `X-Frame-Options` y `Content-Security-Policy` mediante `declarativeNetRequest` para previsualizar sitios web que bloquean incrustaciones.
 * **Optimización extrema de rendimiento:** Lógica refactorizada basada en eventos `mouseover` y `mouseout` con eliminación total de trazado de cursor global (`mousemove`), garantizando un consumo mínimo de CPU.
-* **Arquitectura Híbrida V3:** Soporte nativo para Manifest V3 compatible tanto con Firefox (Event Pages) como con Chromium (Service Workers).
+* **Compatibilidad Manifest V3:** Adaptada para ejecutarse mediante Event Pages en Firefox y Service Workers en Chromium.
 * **Ventana flotante interactiva:** Navega o lee el contenido de destino directamente desde el panel emergente.
 * **Mover y redimensionar:** Arrastra el panel desde la cabecera o ajusta sus dimensiones desde las esquinas.
 * **Fijar vista previa (Pin):** Congela el panel para mantenerlo abierto e interactuar libremente con él.
@@ -55,17 +55,24 @@ Haz clic derecho sobre el icono de la extensión y selecciona **Opciones**:
 
 ## 🛠️ Instalación local (Desarrollo)
 
+> [!IMPORTANT]
+> **Configuración del `manifest.json` según el navegador:**
+> * **Firefox:** Debe usar `"background": { "scripts": ["src/background/background.js"] }`
+> * **Chromium (Chrome / Brave / Edge):** Debe usar `"background": { "service_worker": "src/background/background.js" }`
+
 ### En Mozilla Firefox:
-1. Navega a `about:debugging#/setup`.
-2. Haz clic en **Este Firefox** (*This Firefox*).
-3. Pulsa en **Cargar complemento temporal...** (*Load Temporary Add-on...*).
-4. Selecciona el archivo `manifest.json` del proyecto.
+1. Asegúrate de tener configurado en `manifest.json` el bloque `"background": { "scripts": [...] }`.
+2. Navega a `about:debugging#/setup`.
+3. Haz clic en **Este Firefox** (*This Firefox*).
+4. Pulsa en **Cargar complemento temporal...** (*Load Temporary Add-on...*).
+5. Selecciona el archivo `manifest.json` del proyecto.
 
 ### En Chromium (Chrome, Brave, Edge):
-1. Navega a `chrome://extensions`.
-2. Activa el **Modo de desarrollador** (esquina superior derecha).
-3. Haz clic en **Cargar descomprimida** (*Load unpacked*).
-4. Selecciona la carpeta raíz del proyecto.
+1. Asegúrate de tener configurado en `manifest.json` el bloque `"background": { "service_worker": "..." }`.
+2. Navega a `chrome://extensions`.
+3. Activa el **Modo de desarrollador** (esquina superior derecha).
+4. Haz clic en **Cargar descomprimida** (*Load unpacked*).
+5. Selecciona la carpeta raíz del proyecto.
 
 > [!TIP]
 > **Permiso de ejecución automática en Chromium:**  
